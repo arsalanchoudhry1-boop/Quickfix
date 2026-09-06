@@ -242,9 +242,13 @@
 
         .variant-toggle-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 0.75rem;
             margin-bottom: 1rem;
+        }
+
+        .variant-toggle-container.two-col {
+            grid-template-columns: 1fr 1fr;
         }
 
         .toggle-btn {
@@ -309,12 +313,6 @@
             white-space: pre-line;
             line-height: 1.45;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        }
-
-        .accordion-body.empty {
-            color: var(--text-secondary);
-            font-style: italic;
-            font-family: -apple-system, sans-serif;
         }
 
         /* Diagram Button & Modal */
@@ -471,13 +469,13 @@
     </div>
 
     <script>
-        // Database structured strictly according to document data (NEO left empty if document omits NEO info)
+        // Database structured strictly according to document data. NEO is left completely empty ("") when doc omits NEO info.
         const ataDatabase = {
             "MEL": {
                 title: "Minimum Equipment List",
                 images: [],
                 issues: [
-                    { name: "MEL DEFERRALS & NOTES", notes: "Use this section to log and manage MEL items and reference numbers.", ceo: "Add CEO MEL reference notes here.", neo: "Add NEO MEL reference notes here." }
+                    { name: "MEL DEFERRALS & NOTES", notes: "Use this section to log and manage MEL items and reference numbers.", ceo: "Add CEO MEL reference notes here.", neo: "" }
                 ]
             },
             "ATA 05": {
@@ -724,7 +722,7 @@
                 images: [],
                 issues: [
                     { name: "ATSU / ACARS DATA LINK FAULT", notes: "Give it 3/4 mins before it comes back into life after reset.", ceo: "ATSU C/Bs: L3, L5, L15, L16, L17, L18", neo: "320 NEO: L15, L16, L17, L18\n321 NEO: K42, K43, L05" },
-                    { name: "LOST OF POS INIT PAGE", notes: "Try applicable ATSU reset, if that fails, reset FMGC's.", ceo: "ATSU / FMGC reset", neo: "Same" },
+                    { name: "LOST OF POS INIT PAGE", notes: "Try applicable ATSU reset, if that fails, reset FMGC's.", ceo: "ATSU / FMGC reset", neo: "" },
                     { name: "NO ACCESS TO AOC PAGE IN FMGC", notes: "Carry out ATSU reset for 90 seconds.", ceo: "ATSU reset (90 sec)", neo: "" },
                     { name: "WIFI RESET", notes: "X3 C/Bs in panel 200VU: BMU / RRH, Server, CWAPS.", ceo: "Panel 200VU C/Bs", neo: "" },
                     { name: "DCDU FAULTS", notes: "DataLink control & Display Unit. DCDU 1 – L17, DCDU 2 – L18.", ceo: "DCDU 1: L17 | DCDU 2: L18", neo: "" }
@@ -958,10 +956,8 @@
             appTitle.textContent = code;
             detailHeading.textContent = issue.name;
 
-            const ceoText = issue.ceo && issue.ceo.trim() !== "" ? issue.ceo : "No specific CEO variant data available in document.";
-            const neoText = issue.neo && issue.neo.trim() !== "" ? issue.neo : "No specific NEO variant data available in document.";
-            const ceoClass = issue.ceo && issue.ceo.trim() !== "" ? "" : "empty";
-            const neoClass = issue.neo && issue.neo.trim() !== "" ? "" : "empty";
+            const hasCeo = issue.ceo && issue.ceo.trim() !== "";
+            const hasNeo = issue.neo && issue.neo.trim() !== "";
 
             detailContainer.innerHTML = `
                 <div class="detail-card">
@@ -973,20 +969,22 @@
                     </button>` : ''}
                 </div>
 
-                <div class="variant-toggle-container">
-                    <button class="toggle-btn ceo-btn" id="ceo-toggle" onclick="toggleVariant('ceo')">CEO Variant</button>
-                    <button class="toggle-btn neo-btn" id="neo-toggle" onclick="toggleVariant('neo')">NEO Variant</button>
+                <div class="variant-toggle-container ${hasCeo && hasNeo ? 'two-col' : ''}">
+                    ${hasCeo ? `<button class="toggle-btn ceo-btn" id="ceo-toggle" onclick="toggleVariant('ceo')">CEO Variant</button>` : ''}
+                    ${hasNeo ? `<button class="toggle-btn neo-btn" id="neo-toggle" onclick="toggleVariant('neo')">NEO Variant</button>` : ''}
                 </div>
 
+                ${hasCeo ? `
                 <div class="accordion-content ceo" id="ceo-content">
                     <div class="accordion-title">CEO Circuit Breakers & Procedures</div>
-                    <div class="accordion-body ${ceoClass}">${ceoText}</div>
-                </div>
+                    <div class="accordion-body">${issue.ceo}</div>
+                </div>` : ''}
 
+                ${hasNeo ? `
                 <div class="accordion-content neo" id="neo-content">
                     <div class="accordion-title">NEO Circuit Breakers & Procedures</div>
-                    <div class="accordion-body ${neoClass}">${neoText}</div>
-                </div>
+                    <div class="accordion-body">${issue.neo}</div>
+                </div>` : ''}
             `;
 
             splashScreen.style.display = 'none';
@@ -1004,10 +1002,10 @@
             const ceoContent = document.getElementById('ceo-content');
             const neoContent = document.getElementById('neo-content');
 
-            if (variant === 'ceo') {
+            if (variant === 'ceo' && ceoBtn && ceoContent) {
                 ceoBtn.classList.toggle('active');
                 ceoContent.classList.toggle('open');
-            } else if (variant === 'neo') {
+            } else if (variant === 'neo' && neoBtn && neoContent) {
                 neoBtn.classList.toggle('active');
                 neoContent.classList.toggle('open');
             }
