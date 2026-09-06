@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Airbus Quick Fix</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Airbus Quick Fix">
+    <meta name="theme-color" content="#000000">
+    
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #1c1c1e;
+            --card-hover: #2c2c2e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #0a84ff;
+            --neo-accent: #30d158;
+            --ceo-accent: #ff9f0a;
+            --border: #38383a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.011em;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 0.5px solid var(--border);
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 1.15rem;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: -0.022em;
+            color: var(--text-primary);
+        }
+
+        .back-btn {
+            background: transparent;
+            color: var(--accent);
+            border: none;
+            padding: 0;
+            font-weight: 400;
+            font-size: 0.95rem;
+            display: none;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.6rem 0.8rem 0.6rem 2.2rem;
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 0.7rem center;
+            display: none;
+        }
+
+        main {
+            padding: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        /* Splash Screen */
+        #splash-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 75vh;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        #splash-screen h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 0.4rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        #splash-screen p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0 0 2.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        .start-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem 3.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .start-btn:active {
+            transform: scale(0.97);
+            background-color: var(--card-bg);
+        }
+
+        /* Chapters Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+            background-color: var(--card-hover);
+        }
+
+        .card-code {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        /* Maintenance Messages List View */
+        .section-header {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.022em;
+        }
+
+        .section-sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .issue-row {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.15rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.15s ease;
+        }
+
+        .issue-row:active {
+            background-color: var(--card-hover);
+        }
+
+        .issue-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        .chevron {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Detail View */
+        .detail-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .general-notes {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            white-space: pre-line;
+        }
+
+        .variant-toggle-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.ceo-btn.active {
+            background-color: rgba(255, 159, 10, 0.12);
+            border-color: var(--ceo-accent);
+            color: var(--ceo-accent);
+        }
+
+        .toggle-btn.neo-btn.active {
+            background-color: rgba(48, 209, 88, 0.12);
+            border-color: var(--neo-accent);
+            color: var(--neo-accent);
+        }
+
+        .accordion-content {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .accordion-content.open {
+            padding: 1.25rem;
+            max-height: 500px;
+            border-color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .accordion-content.ceo.open {
+            border-left: 4px solid var(--ceo-accent);
+        }
+
+        .accordion-content.neo.open {
+            border-left: 4px solid var(--neo-accent);
+        }
+
+        .accordion-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .ceo .accordion-title { color: var(--ceo-accent); }
+        .neo .accordion-title { color: var(--neo-accent); }
+
+        .accordion-body {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            white-space: pre-line;
+            line-height: 1.45;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        .diagram-tag {
+            display: inline-block;
+            background-color: rgba(10, 132, 255, 0.15);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1 id="app-title">Airbus Quick Fix</h1>
+            <button id="back-btn" class="back-btn" onclick="navigateBack()">Back</button>
+        </div>
+        <input type="text" id="search-input" class="search-bar" placeholder="Search pilot maintenance messages, ECAM, or C/B's..." oninput="handleSearch(this.value)">
+    </header>
+
+    <main>
+        <!-- Splash Screen Minimalist Start -->
+        <div id="splash-screen">
+            <h2>Airbus Quick Fix Guide</h2>
+            <p>British Airways Engineering</p>
+            <button class="start-btn" onclick="startApp()">START</button>
+        </div>
+
+        <!-- ATA Chapters Grid View -->
+        <div id="home-container" class="view-section">
+            <div id="home-view" class="grid"></div>
+        </div>
+
+        <!-- Pilot Maintenance Messages List View -->
+        <div id="issues-view" class="view-section">
+            <h2 id="issues-heading" class="section-header"></h2>
+            <div id="issues-sub" class="section-sub">Select a pilot maintenance message or fault displayed on screen:</div>
+            <div id="issues-list"></div>
+        </div>
+
+        <!-- Accordion C/B Detail View -->
+        <div id="detail-view" class="view-section">
+            <h2 id="detail-heading" class="section-header" style="font-family: ui-monospace, monospace;"></h2>
+            <div id="detail-container"></div>
+        </div>
+    </main>
+
+    <script>
+        const ataDatabase = {
+            "ATA 05": {
+                title: "Time Limits & Checks",
+                issues: [
+                    { name: "OBOUR EVENT / TSM SUPP", notes: "TSM 05-50-00-810-831-A supplement. DIR # 10179225.", ceo: "Stage Sheets 10271424 (OLD)", neo: "Stage Sheets 10333196 (NEW)" },
+                    { name: "FLAP EXCEEDANCE <= 10 KTS", notes: "Inspection requirement following overspeed condition.", ceo: "AMM 05-51-13-200-001-A", neo: "AMM 05-51-13-200-001-A" },
+                    { name: "BIRD STRIKE INSPECTION", notes: "General structural airframe verification.", ceo: "AMM 05-51-14-200-802", neo: "AMM 05-51-14-200-802" },
+                    { name: "LIGHTNING STRIKE", notes: "Post-strike verification and zones.", ceo: "AMM 05-51-18", neo: "AMM 05-51-18" },
+                    { name: "VIBRATION / VIBE REPORT", notes: "Vibration analysis tracking sheet.", ceo: "TSM 05-50-00-810-801-A", neo: "TSM 05-50-00-810-801-A" },
+                    { name: "IDG OIL MONITORING (>= 1 US QT)", notes: "Monitored uplifts limit tracking.", ceo: "AMM 12-13-24-612-011-A\n(2 ADD's: 1 inspection every 50Hrs and green 200hrs)", neo: "AMM 12-13-24-612-011-A" },
+                    { name: "FWD AVC GALLEY SPILLAGE", notes: "Check for galley liquid ingress.", ceo: "AMM 05-51-28", neo: "AMM 05-51-28" },
+                    { name: "NEO SEAT BACKS CRACKED", notes: "Defect tracking and sticker replacement tracking.", ceo: "N/A", neo: "DIR 10341186 (120 DAY ADD)\nStickers: P/N 10171947-1 (Small)\nP/N 10171947-3 (Medium)\nP/N 10171947-5 (Large)\nDIR 10172068 | DRG No 10171947" }
+                ]
+            },
+            "ATA 21": {
+                title: "Air Conditioning",
+                issues: [
+                    { name: "PRESSURISATION DEGRADED / CPCU", notes: "Cycle CB's (Self-Test 85 sec). If pressurisation degraded, select mode selector to Man for <10 sec, then Auto. Ensure ADIRUs aligned.", ceo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22", neo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22" },
+                    { name: "VENT AV SYS FAULT / AVEC", notes: "AVEC – Avionic Equipment Ventilation Control. Note: VENT EXTRACT FAULT can be caused by CB AE02 on 123VU knocked by luggage.", ceo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17", neo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17" },
+                    { name: "CARGO VENTILATION FAULT", notes: "Status FWD (AFT) Cargo Vent (Self-test 30 sec).", ceo: "Fwd Cargo Vent CTL: 122VU - T20, T22\nAft Cargo Vent Fan: 122VU - S20, S22", neo: "Fwd Cargo Vent CTL: 122VU - T20, T22\nAft Cargo Vent Fan: 122VU - S20, S22" },
+                    { name: "AIR PACK REG FAULT", notes: "CAUTION: Engines will accelerate to FLT idle if running when resetting these C/Bs. Pack off + ENG bleed off + ENG bleed and pack back on if issue persists.", ceo: "Pack Temp Cont Sys 1:\n122VU - X21,22 & W21,22\nSys 2: 122VU - Y18,19 & Y20,21", neo: "Newer A/C (UUS-UYY) & NEO:\nSys 1: 122VU - X21, X22, Y18, 49VU - D08\nSys 2: 122VU - W21, W22, Y20, Y21" },
+                    { name: "COND HOT AIR FAULT / TRIM AIR", notes: "Reset using HOT AIR push button – wait 30 secs after switching pack on before attempting reset. Resetting zone controllers with engines running generates ENG FADEC warning.", ceo: "Zone Temp CTL 1: 122VU - V17,19\nZone Temp CTL 2: 122VU - V18,20", neo: "HOT AIR FAULTS (UUS – UYR):\nSYS 1 – X21, X22, D08, Y18\nSYS 2 – W21, W22, Y20, Y21" },
+                    { name: "STATUS MSG: 1 PACK ON IF WAI ON", notes: "Appears if 1 pack on and Wing Anti-Ice selected on. See ATA 36.", ceo: "See ATA 36", neo: "See ATA 36" },
+                    { name: "COND LAV / GALLEY FAN FAULT", notes: "Lav / Galley Vent Extract Fan servicing.", ceo: "Control: 122VU – U19\nSupply:  122VU – U21", neo: "Control: 122VU – U19\nSupply:  122VU – U21" }
+                ]
+            },
+            "ATA 22": {
+                title: "Auto Flight",
+                issues: [
+                    { name: "NO NAV AIDS AVAILABLE", notes: "Check RMP’s are not in manual or cycle the Auto/Man switch.", ceo: "Check RMP configuration", neo: "Check RMP configuration" },
+                    { name: "AUTO THRUST INOP / FMGC FAULT", notes: "FMGC resets can cause Auto Flt / Auto Thrust OFF ECAM MSG (clears on T/O PWR). Do not reset within 2 mins of power up. Cycle FMGC Maint switch for 30s.", ceo: "FMGC 1: 49VU - B02 | FMGC 2: 121VU - M17\nMCDU 1: 49VU - B01 | MCDU 2: 121VU - N20", neo: "FSN 501-550:\nFMGC 1: 49VU - H08 | FMGC 2: 49VU - M17\nMCDU 1: 49VU - H07 | MCDU 2: 121VU - N20" },
+                    { name: "MCDU DISPLAY FAULT", notes: "Cycle C/Bs (5-10 sec, self-test 45 sec). If reset fails, try reset of FMGC.", ceo: "MCDU 1: 49VU - B01\nMCDU 2: 121VU - N20", neo: "MCDU 1: 49VU - H07\nMCDU 2: 121VU - N20" },
+                    { name: "AUTO FLT FCU 1 (2) FAULT", notes: "Auto flight control unit fault. If reset fails, cycle C/Bs for 7 mins.", ceo: "FCU 1: 49VU - B05\nFCU 2: 121VU - M21", neo: "FCU 1: 49VU - H11\nFCU 2: 121VU - M21" },
+                    { name: "YAW DAMPER FAULT", notes: "Due to hydraulics needing to be off, can only reset when stationary.", ceo: "FAC Switches OFF/ON\nFAC 1: 49VU B03, B04\nFAC 2: 121VU M18, M19", neo: "FSN 501–550:\nFAC 1: 49VU - H19\nFAC 1: 49VU - H20" },
+                    { name: "RUDDER TRIM INDICATION FAULT", notes: "Rudder trim indication check.", ceo: "M20 or M22", neo: "M20 or M22" }
+                ]
+            },
+            "ATA 23": {
+                title: "Communications",
+                issues: [
+                    { name: "HF SYSTEM FAULT", notes: "Cycle C/Bs (5-10 sec, self-test 10 sec).", ceo: "HF 1: 49VU – HA14 or L10\nHF 2: 122VU – L13", neo: "Not installed on TNK and EOW onwards.\nHF 1: 49VU - HA14" },
+                    { name: "VHF SYSTEM FAULT", notes: "Also see ACP resets.", ceo: "VHF 1 LH: 49VU - G09\nVHF 2 RH: 121VU - L04\nVHF 3 CTR: 121VU - L05", neo: "Standard configuration" },
+                    { name: "ACP FAULT / AUDIO CONTROL PANEL", notes: "Also see VHF resets.", ceo: "ACP Capt: 49VU - G10\nACP F/O: 49VU - G07\nACP 3rd OCC: 121VU - M02", neo: "ACP Capt: 49VU - G06\nACP F/O: 49VU - G07\nACP 3RD OCC: 121VU - M02" },
+                    { name: "RMP FAULT / SYNC ISSUE", notes: "Only 2 installed = nil dispatch. For Box 1-2 sync issues, reset AMU.", ceo: "RMP 1: 49VU - G10 | RMP 2: 121VU - L02 | RMP 3: 121VU - L03", neo: "RMP 1: 49VU - G07 / 121VU - M03\nRMP 2: 49VU - G08 / 121VU - M04\nAMU: 49VU - G06 / 121VU - M01\nCOMM - ADT MSG - B02" },
+                    { name: "CONTINUOUS CREW CALL / CIDS FAULT", notes: "EVAC Alarm sounding / CIDS reset. Resetting in flight not recommended.", ceo: "CIDS DIR 1 (A319): 49VU - G01\nCIDS DIR 1 & 2 ESS: 49VU - G02\nCIDS DIR 1 & 2 Norm: 121VU - M05, M07\nAll: 49VU - G01-G05, 121VU - M05-M14, Q14", neo: "Extra C/Bs for NEO on top of CEO:\nHA9, HA10, HA11 and HA12" },
+                    { name: "CKPT VIDEO SURVEILLANCE FAULT", notes: "Cycle on/off switch or reset C/B.", ceo: "DOORS/CKPT/VIDEO/SPLY: 122VU – T16", neo: "DOORS/CKPT/VIDEO/SPLY: 122VU – T16" },
+                    { name: "CVR TEST FAIL / TONE LOSS", notes: "Loss of test tone / test fail. See ATA 31 for DFDR.", ceo: "CVR ctrl: 49VU - E13\nCVR sply: 49VU - E14", neo: "CVR ctrl: 49VU - E13\nCVR sply: 49VU - E14" },
+                    { name: "ACARS PRINTER FAULT", notes: "Check printer roll correct orientation.", ceo: "Ptr/sply: 121VU - J21", neo: "A320 NEO: 121VU - J21\nA321 NEO: 121VU - J44" }
+                ]
+            },
+            "ATA 24": {
+                title: "Electrical Power",
+                issues: [
+                    { name: "BCL FAULT / BATTERY CHARGER", notes: "Cycle relevant battery push switch on overhead panel.", ceo: "Cycle overhead push switch (120 sec)", neo: "Cycle overhead push switch (120 sec)" },
+                    { name: "GCU FAULT / GENERATOR CONTROL", notes: "Cycle relevant generator push switch on overhead panel.", ceo: "Cycle overhead push switch (5-10 sec)", neo: "Cycle overhead push switch (5-10 sec)" },
+                    { name: "GPCU / EXT PWR RESET", notes: "Engines OFF, APU OFF, External PWR OFF and Disconnect. Reinstate power and re-check.", ceo: "Power reset sequence", neo: "Power reset sequence" },
+                    { name: "TRU FAULT / RECTIFIER UNIT", notes: "Reset via CFDS: System Report, ELEC, TR*, Reset (Inhibited following ENG start).", ceo: "CFDS reset menu", neo: "CFDS reset menu" },
+                    { name: "DC BUS TIE / IDG OIL DELTA FAULT", notes: "Cycles batteries, then cycle Bus Tie Switch (large load shed, warn crew).", ceo: "NEO TFU on Airbusworld", neo: "NEO TFU on Airbusworld" },
+                    { name: "IDG OIL CONSUMPTION ADD", notes: "Controlled inspection ADD.", ceo: "AMM 12-13-24-612-011-A (50 H C / 200 H O)", neo: "AMM 12-13-24-612-011-A" },
+                    { name: "DMC FAULT MSG", notes: "Cycle Bus Tie Switch. Wait up to 2 mins.", ceo: "DMC 1 SPLY: E11\nDMC 2 STBY SPLY: E10", neo: "A321 NEO:\nDMC 1: E8 & E10 | DMC 2: K8 & R8 | DMC 3: E7 & K9" }
+                ]
+            },
+            "ATA 25": {
+                title: "Equipment / Furnishings",
+                issues: [
+                    { name: "CREW SEAT HARNESS LIMITS", notes: "Condition limits check.", ceo: "AMM 25-22-00-210-001-A", neo: "AMM 25-22-00-210-001-A" },
+                    { name: "CABIN DRAWINGS & SHROUD MOD", notes: "Airbus aircraft drawing numbers & Service Bulletins.", ceo: "SB: BA-320-25-0068", neo: "SB: BA-320-25-0068" },
+                    { name: "CLASSIC VS NEO SEATS / GALLEYS", notes: "Seat and galley equipment references.", ceo: "B/E Aerospace Pinnacle: 10175366\nZodiac Galleys Europe", neo: "CMM 10239107 Recaro" },
+                    { name: "CKPT DOOR ACCESS CODE", notes: "Emergency entry code reference.", ceo: "Access code: #222", neo: "Access code: #222" }
+                ]
+            },
+            "ATA 26": {
+                title: "Fire Protection",
+                issues: [
+                    { name: "SDCU FAULT / SMOKE DETECT", notes: "Cycle CBs (20 mins). Pull for 1 min first if short of time. Clean lav smoke detector filters while pulled.", ceo: "SDCU Ch 1: 49VU - C06\nSDCU Ch 2: 122VU - T18", neo: "Newer A/C + UUS - UYY:\nC05, C06, T17, T18" },
+                    { name: "FDU FAULT / FIRE DETECTOR UNIT", notes: "Cycle C/Bs (5-10 sec, self-test 60 sec).", ceo: "Eng 1 loop A: 49VU - A06 | Loop B: 121VU - Q38\nEng 2 loop A: 121VU - Q39 | Loop B: 49VU - A07\nAPU loop A: 121VU - L43 | Loop B: 121VU - L44", neo: "Standard configuration" },
+                    { name: "FIRE BOTTLE SQUIBS FAULT", notes: "Squib continuity and circuit checks.", ceo: "Btl 1 squib A: 121VU - Q43 | B: Q44\nBtl 2 squib A: 121VU - Q41 | B: Q42", neo: "Standard configuration" }
+                ]
+            },
+            "ATA 27": {
+                title: "Flight Controls",
+                issues: [
+                    { name: "ELAC 1 (2) FAULT", notes: "Cycle push button on overhead panel for 10 sec, then C/B 30 sec.", ceo: "ELAC 1: 49VU - B11\nELAC 2: 121VU - R20", neo: "A321 NEO:\nELAC 1: 49VU - B06" },
+                    { name: "SEC 1 (2)(3) FAULT", notes: "Cycle overhead push buttons for 10 sec, then C/B 30 sec.", ceo: "SEC 1: 49VU - B08\nSEC 2: 121VU - Q18 | SEC 3: 121VU - Q19", neo: "A321 NEO:\nSEC 1: 49VU - B03" },
+                    { name: "AILERON INDICATION OUTSIDE BOX / FCDC", notes: "Retract flaps to 0, ELACs off then back on, then flaps back out.", ceo: "FCDC sply 1: 49VU - B10\nFCDC sply 2: 121VU - Q20", neo: "FCDC sply 1: 49VU - B10\nFCDC sply 2: 121VU - Q20" },
+                    { name: "SLAT / FLAP SYS FAULT", notes: "Cycle relevant C/Bs with engines running.", ceo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07", neo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07" },
+                    { name: "F/CTL ALT LAW / T/O CONFIG", notes: "Side stick priority issues, Alt law during engine start.", ceo: "FAC 1: 49VU - B03,04 | FAC 2: 121VU - M18,19\nCheck brake temp & C/B 121VU - M37", neo: "Standard configuration" }
+                ]
+            },
+            "ATA 28": {
+                title: "Fuel",
+                issues: [
+                    { name: "FQIC FAULT / FUEL QTY COMPUTER", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27", neo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27" },
+                    { name: "CENTRE TANK LOW PRESSURE CAUTION", notes: "If center tank < 200kg: set FUEL MODE SEL pb to MAN, CTR TK PUMP 1 & 2 to OFF.", ceo: "Standard procedure applies", neo: "NEO CENTRE TANK PUMP FAULT:\nR25, R26, R27\nNEO LH TANK PUMP FAULT: R23, R24\nNEO RH TANK PUMP FAULT: R28, R29" },
+                    { name: "FUEL LP CAUTION / LP VALVE", notes: "Cycle relevant ENG master switch.", ceo: "ENG 1 MOT 1: A08 | MOT 2: M25\nENG 2 MOT 1: A09 | MOT 2: M26", neo: "Standard configuration" }
+                ]
+            },
+            "ATA 29": {
+                title: "Hydraulic Power",
+                issues: [
+                    { name: "HYD Y(G/B) SYS LO PR", notes: "Cycle pump and PTU push buttons. If nil fix, check leak measurement valve positions.", ceo: "Check B HYD SYS LO PX C/B 9AB", neo: "Check B HYD SYS LO PX C/B 9AB" },
+                    { name: "BLUE SYSTEM LO AIR PX", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "B Reservoir PX: P32", neo: "B Reservoir PX: P32" },
+                    { name: "YELLOW PUMP INOP / CARGO DOOR", notes: "Check if cargo doors are closed. Check C/Bs behind jump seat.", ceo: "Jump seat C/Bs: AB03, AB06, N30", neo: "Jump seat C/Bs: AB03, AB06, N30" }
+                ]
+            },
+            "ATA 30": {
+                title: "Ice & Rain Protection",
+                issues: [
+                    { name: "WHC FAULT / WINDOW HEAT COMPUTER", notes: "Cycle C/Bs 5-10 sec (Self-test 5 sec).", ceo: "WHC 1 (Left): 122VU - X13\nWHC 2 (Right): 122VU - W13", neo: "NEO W/SHIELD HEATING:\nLH W/SHIELD: 123VU - AF03\nRH W/SHIELD: 123VU – AF10" },
+                    { name: "ANTI-ICE CAPT (F/O) STBY PROBE FAULT", notes: "Probe Heat Computer (PHC) fault. If all 3 PHCs fail, suspect LGCIU.", ceo: "PHC 1 (capt): 49VU - D03\nPHC 2 (F/O): 122VU - Y12\nPHC 3 (stby): 122VU - Y16", neo: "Individual probe C/Bs available" }
+                ]
+            },
+            "ATA 31": {
+                title: "Indicating / Recording",
+                issues: [
+                    { name: "FWC 1 (2) SPLY FAULT", notes: "Cycle C/Bs 5-10 sec (Self-test 50 sec). Only cycle one at a time!", ceo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07", neo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07" },
+                    { name: "CFDIU FAULT / CENTRAL FAULT DATA", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "CFDS CFDIU Sply: 121VU - J18\nCFDIU back-up: 121VU - J17", neo: "CFDS CFDIU Sply: 121VU - J41\nCFDIU back-up: 121VU - J40" },
+                    { name: "RECORDER SYS FAULT / DFDR", notes: "Digital Flight Data Recorder ECAM message.", ceo: "RCDR FDIU & QAR: 121VU - K15\nRCDR/ACCLRM: 121VU - K18", neo: "DAR A321 NEO: K38, J38\nRCDR2 CVR & FDR: 121VU - K39" },
+                    { name: "DMC FAULT / DISPLAY MANAGEMENT", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "DMC 1 sply: 49VU - E11 | swtg: E09\nDMC 2 sply: 121VU - Q08 | swtg: R08", neo: "Standard DMC configuration" }
+                ]
+            },
+            "ATA 32": {
+                title: "Landing Gear",
+                issues: [
+                    { name: "NW STEERING FAULT / BSCU FAULT", notes: "Anti-skid & NWS switch to OFF, cycle C/Bs, then switch back ON. 1 channel U/S ok to go MEL 32-42-03.", ceo: "BSCU Sys 1: 121VU - M33, M34\nBSCU Sys 2: 121VU - M35, M36", neo: "NEO Tacho fault - MEL 32-42-06C applies" },
+                    { name: "LGCIU FAULT / GEAR INTERFACE", notes: "Cycle C/Bs 30 sec one at a time.", ceo: "LGCIU SYS 1: 49VU - C09\nLGCIU SYS 2: 121VU - Q35", neo: "LGCIU 1: C09, Q34, R32\nLGCIU 2: Q35, R33" },
+                    { name: "PARK BRAKE STUCK ON", notes: "Select Park Brake OFF, cycle C/Bs 20 sec.", ceo: "Park brake control norm: 121VU - N36\nPark brake control Stby: 121VU – N37", neo: "Standard configuration" }
+                ]
+            },
+            "ATA 34": {
+                title: "Navigation",
+                issues: [
+                    { name: "GPWS / TERRAIN FAULT", notes: "Failure of FMGC1 gives GPWS terrain fault. If GPWS does not reset, re-align ADIRUs.", ceo: "GPWS C/Bs: 121VU - P06, P07", neo: "GPWS C/Bs: 121VU - P06, P07" },
+                    { name: "ADIRU FAULT / ALIGNMENT", notes: "If resetting 1 box, captain must manually enter aircraft position. ADR 1 must be operative.", ceo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10\nADIRU 3: 121VU - N3, N5, N7, N9, F9", neo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10\nADIRU 3: 121VU - N3, N5, N7, N9, F9" },
+                    { name: "RADIO ALTIMETER DEGRADED / FAIL", notes: "RA degraded (reset both rad alts + FWCs).", ceo: "Rad alt 1: 121VU - K11\nRad alt 2: 121VU - K12", neo: "Standard configuration" },
+                    { name: "ADS-B REPORTING FAULT", notes: "Reset both GPSs and FWCs (F1, Q7).", ceo: "GPS 1: 49VU - G12 | GPS 2: 121VU - L07/K09", neo: "Standard configuration" }
+                ]
+            },
+            "ATA 36": {
+                title: "Pneumatics",
+                issues: [
+                    { name: "BLEED AIR SYSTEM FAULT / BMC", notes: "For most air bleed faults, reset both BMCs (C/Bs 10 sec). Bleed pressure below 57 psi.", ceo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23", neo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23" },
+                    { name: "AIR BLEED NOT CLOSED", notes: "Cycle switch 10 sec with engines OFF.", ceo: "FWC 1: 49VU - F01 | FWC 2: 121VU - Q07", neo: "FWC 1: 49VU - F01 | FWC 2: 121VU - Q07" }
+                ]
+            },
+            "ATA 38": {
+                title: "Water / Waste",
+                issues: [
+                    { name: "POTABLE WATER LOW PRESSURE", notes: "Ensure APU and APU bleed are on. Cycle packs off/on, check service panel valve.", ceo: "Water service panel valve check", neo: "Water service panel valve check" },
+                    { name: "VACUUM TOILET SYSTEM INOP", notes: "Cycle C/Bs 30 sec (2001VU located in AFT Cabin Roof).", ceo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04", neo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04" }
+                ]
+            },
+            "ATA 46": {
+                title: "Information Systems",
+                issues: [
+                    { name: "ATSU / ACARS DATA LINK FAULT", notes: "Give it 3/4 mins before coming back to life after reset.", ceo: "ATSU C/Bs: L3, L5, L15, L16, L17, L18", neo: "320 NEO: L15, L16, L17, L18\n321 NEO: K42, K43, L05" }
+                ]
+            },
+            "ATA 49": {
+                title: "APU",
+                issues: [
+                    { name: "ECB FAULT / APU CONTROL BOX", notes: "APU OFF, APU Master switch set to ON. Cycle C/Bs 10 sec.", ceo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42", neo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42" },
+                    { name: "APU OIL LOW LEVEL WARNING", notes: "Ok for 10 operating hours IAW manual.", ceo: "AMM = 49-90-00-600-007A", neo: "AMM = 49-90-00-600-007A" }
+                ]
+            },
+            "ATA 52": {
+                title: "Doors",
+                issues: [
+                    { name: "CKPT DOOR STRIKER FAULT", notes: "Try holding switch to OPEN for 30s to clear striker fault or Pax Mong C/B.", ceo: "Pax Mong CB: 122VU - T13 (Repeat 3 times)\nAccess Code: #222", neo: "Pax Mong CB: 122VU - T13\nAccess Code: #222" },
+                    { name: "OVERWING LOCK STATUS MSG", notes: "Lock activated by engine speed (50% N1).", ceo: "N/A", neo: "A321 Neo Only: Ensure ADIRUs aligned" }
+                ]
+            },
+            "ATA 73": {
+                title: "Engine Fuel and Control",
+                issues: [
+                    { name: "FADEC A (B) FAULT / ENG DUAL FAIL", notes: "Engines OFF > 5 min. (EPR is Normal Mode, N1 is Default/Degraded mode MEL 73-20-04A).", ceo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R41\nEng 2 FADEC A & EIU2: 49VU - A05\nEng 2 FADEC B & EIU2: 121VU - Q40", neo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R40\nEng 2 FADEC A & EIU2: 49VU - A05\nEng 2 FADEC B & EIU2: 121VU - R41" }
+                ]
+            },
+            "ATA 76": {
+                title: "Engine Controls",
+                issues: [
+                    { name: "AUTO THRUST FAULT", notes: "Cycle C/Bs 90 sec (Self test 120 sec).", ceo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17", neo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17" }
+                ]
+            },
+            "ATA 77": {
+                title: "Engine Indicating",
+                issues: [
+                    { name: "EVMU FAULT / VIBRATION MONITOR", notes: "Cycle C/Bs 10 sec (Self test 30 sec).", ceo: "Eng 1 & 2 EVMU: 121VU - R44", neo: "Eng 1 & 2 EVMU: 121VU - R44" }
+                ]
+            },
+            "ATA 78": {
+                title: "Exhaust",
+                issues: [
+                    { name: "THRUST REVERSER FAULT", notes: "Cycle C/Bs 2 sec (Self test 3 sec).", ceo: "Oil Px #1: 121VU - N40\nOil Px #2: 121VU - N41", neo: "Oil Px #1: 121VU - N40\nOil Px #2: 121VU - N41" }
+                ]
+            },
+            "ATA 80": {
+                title: "Starting",
+                issues: [
+                    { name: "LEAP 1A IGN FAULTS / START FAULT", notes: "Min air pressure to start CEO is 25 PSI. NEO is 30 PSI.", ceo: "Min air pressure: 25 PSI", neo: "Min air pressure: 30 PSI\nFirst/second auto start attempts fail due to lack of EGT rise within 15s; 3rd attempt succeeds automatically (TFU 74.00.00.096)." }
+                ]
+            }
+        };
+
+        // App State
+        let currentView = 'splash';
+        let selectedChapterKey = null;
+
+        const splashScreen = document.getElementById('splash-screen');
+        const homeContainer = document.getElementById('home-container');
+        const homeView = document.getElementById('home-view');
+        const issuesView = document.getElementById('issues-view');
+        const detailView = document.getElementById('detail-view');
+        
+        const backBtn = document.getElementById('back-btn');
+        const appTitle = document.getElementById('app-title');
+        const searchInput = document.getElementById('search-input');
+        
+        const issuesHeading = document.getElementById('issues-heading');
+        const issuesList = document.getElementById('issues-list');
+        const detailHeading = document.getElementById('detail-heading');
+        const detailContainer = document.getElementById('detail-container');
+
+        function startApp() {
+            currentView = 'home';
+            splashScreen.style.display = 'none';
+            homeContainer.style.display = 'block';
+            appTitle.textContent = 'Airbus Quick Fix';
+            searchInput.style.display = 'block';
+            renderHome(ataDatabase);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderHome(dataToRender) {
+            homeView.innerHTML = '';
+            const keys = Object.keys(dataToRender);
+            
+            if (keys.length === 0) {
+                homeView.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 3rem; font-size: 0.9rem;">No ATA chapters found</div>';
+                return;
+            }
+
+            keys.forEach(code => {
+                const item = dataToRender[code];
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openChapter(code);
+                card.innerHTML = `
+                    <div class="card-code">${code}</div>
+                    <div class="card-title">${item.title}</div>
+                `;
+                homeView.appendChild(card);
+            });
+        }
+
+        function openChapter(code) {
+            selectedChapterKey = code;
+            const chapter = ataDatabase[code];
+            if (!chapter) return;
+
+            currentView = 'issues';
+            appTitle.textContent = code;
+            issuesHeading.textContent = `${code}: ${chapter.title}`;
+            
+            issuesList.innerHTML = '';
+            chapter.issues.forEach((issue, index) => {
+                const row = document.createElement('div');
+                row.className = 'issue-row';
+                row.onclick = () => openIssueDetail(code, index);
+                row.innerHTML = `
+                    <div class="issue-title">${issue.name}</div>
+                    <div class="chevron">›</div>
+                `;
+                issuesList.appendChild(row);
+            });
+
+            splashScreen.style.display = 'none';
+            homeContainer.style.display = 'none';
+            issuesView.style.display = 'block';
+            detailView.style.display = 'none';
+            backBtn.style.display = 'inline-block';
+            searchInput.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openIssueDetail(code, index) {
+            const chapter = ataDatabase[code];
+            const issue = chapter.issues[index];
+
+            currentView = 'detail';
+            appTitle.textContent = code;
+            detailHeading.textContent = issue.name;
+
+            detailContainer.innerHTML = `
+                <div class="detail-card">
+                    <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.4rem;">Maintenance Notes & Procedure</div>
+                    <div class="general-notes">${issue.notes}</div>
+                    <div class="diagram-tag">📁 Includes Schematics & Diagram References</div>
+                </div>
+
+                <div class="variant-toggle-container">
+                    <button class="toggle-btn ceo-btn" id="ceo-toggle" onclick="toggleVariant('ceo')">CEO Variant</button>
+                    <button class="toggle-btn neo-btn" id="neo-toggle" onclick="toggleVariant('neo')">NEO Variant</button>
+                </div>
+
+                <div class="accordion-content ceo" id="ceo-content">
+                    <div class="accordion-title">CEO Circuit Breakers & Procedures</div>
+                    <div class="accordion-body">${issue.ceo}</div>
+                </div>
+
+                <div class="accordion-content neo" id="neo-content">
+                    <div class="accordion-title">NEO Circuit Breakers & Procedures</div>
+                    <div class="accordion-body">${issue.neo}</div>
+                </div>
+            `;
+
+            splashScreen.style.display = 'none';
+            homeContainer.style.display = 'none';
+            issuesView.style.display = 'none';
+            detailView.style.display = 'block';
+            backBtn.style.display = 'inline-block';
+            searchInput.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleVariant(variant) {
+            const ceoBtn = document.getElementById('ceo-toggle');
+            const neoBtn = document.getElementById('neo-toggle');
+            const ceoContent = document.getElementById('ceo-content');
+            const neoContent = document.getElementById('neo-content');
+
+            if (variant === 'ceo') {
+                ceoBtn.classList.toggle('active');
+                ceoContent.classList.toggle('open');
+            } else if (variant === 'neo') {
+                neoBtn.classList.toggle('active');
+                neoContent.classList.toggle('open');
+            }
+        }
+
+        function navigateBack() {
+            if (currentView === 'detail') {
+                openChapter(selectedChapterKey);
+            } else if (currentView === 'issues') {
+                goHome();
+            }
+        }
+
+        function goHome() {
+            currentView = 'home';
+            appTitle.textContent = 'Airbus Quick Fix';
+            splashScreen.style.display = 'none';
+            homeContainer.style.display = 'block';
+            issuesView.style.display = 'none';
+            detailView.style.display = 'none';
+            backBtn.style.display = 'none';
+            searchInput.style.display = 'block';
+            searchInput.value = '';
+            renderHome(ataDatabase);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleSearch(query) {
+            const q = query.toLowerCase().trim();
+            if (!q) {
+                renderHome(ataDatabase);
+                return;
+            }
+
+            const filtered = {};
+            for (const [code, data] of Object.entries(ataDatabase)) {
+                const matchCode = code.toLowerCase().includes(q);
+                const matchTitle = data.title.toLowerCase().includes(q);
+                const matchIssues = data.issues.some(i => 
+                    i.name.toLowerCase().includes(q) || i.notes.toLowerCase().includes(q) || i.ceo.toLowerCase().includes(q) || i.neo.toLowerCase().includes(q)
+                );
+
+                if (matchCode || matchTitle || matchIssues) {
+                    filtered[code] = data;
+                }
+            }
+            renderHome(filtered);
+        }
+    </script>
+</body>
+</html>
