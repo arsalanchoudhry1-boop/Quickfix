@@ -465,140 +465,188 @@
     </div>
 
     <script>
-        // Database with added image mapping paths.
-        // Save your cropped images to a folder named "images" next to this HTML file.
+        // Comprehensive database populated from Airbus Quick Fix Guide GH2 document
         const ataDatabase = {
             "ATA 05": {
                 title: "Time Limits & Checks",
                 images: [],
                 issues: [
-                    { name: "OBOUR EVENT / TSM SUPP", notes: "Ref: TSM 05-50-00-810-831-A supplement. DIR # 10179225.", ceo: "Stage Sheets Ref: 10271424 (OLD)", neo: "Stage Sheets Ref: 10333196 (NEW)" },
+                    { name: "ODOUR EVENT", notes: "Ref: TSM 05-50-00-810-831-A supplement. DIR # 10179225.", ceo: "Stage Sheets Ref: 10271424 (OLD)", neo: "Stage Sheets Ref: 10333196 (NEW)" },
                     { name: "FLAP EXCEEDANCE <= 10 KTS", notes: "Ref: AMM 05-51-13-200-001-A.", ceo: "AMM 05-51-13-200-001-A", neo: "AMM 05-51-13-200-001-A" },
-                    { name: "NEO SEAT BACKS CRACKED", notes: "Ref: DIR 10341186.", ceo: "N/A", neo: "DIR 10341186 (120 DAY ADD)\nStickers: P/N 10171947-1 (Small)\nP/N 10171947-3 (Medium)\nP/N 10171947-5 (Large)" }
+                    { name: "BIRD STRIKE INSPECTION", notes: "Ref: AMM 05-51-14-200-802.", ceo: "AMM 05-51-14-200-802", neo: "AMM 05-51-14-200-802" },
+                    { name: "LIGHTNING STRIKE", notes: "Ref: AMM 05-51-18.", ceo: "AMM 05-51-18", neo: "AMM 05-51-18" },
+                    { name: "VIBRATION / VIB REPORT SHEET", notes: "Ref: TSM 05-50-00-810-801-A.", ceo: "TSM 05-50-00-810-801-A", neo: "TSM 05-50-00-810-801-A" },
+                    { name: "IDG OIL MONITORING", notes: "Uplifts of 1 US Quart/1 Litre or greater. AMM 12-13-24-612-011-A.", ceo: "2 ADD's: 1 inspection every 50Hrs and green 200hrs", neo: "2 ADD's: 1 inspection every 50Hrs and green 200hrs" },
+                    { name: "FWD AVC GALLEY SPILLAGE", notes: "Ref: AMM 05-51-28.", ceo: "AMM 05-51-28", neo: "AMM 05-51-28" },
+                    { name: "NEO SEAT BACKS CRACKED", notes: "Ref: DIR 10341186 (120 DAY ADD).", ceo: "N/A", neo: "DIR 10341186 (120 DAY ADD)\nSticker P/N 10171947-1 (Small)\nP/N 10171947-3 (Medium)\nP/N 10171947-5 (Large)\nDIR 10172068, DRG No 10171947" },
+                    { name: "IPAD ELECTRONIC LOGBOOK", notes: "Equipment reference.", ceo: "P/N - ELBIPADGEN9", neo: "P/N - ELBIPADGEN9" }
                 ]
             },
             "ATA 21": {
                 title: "Air Conditioning",
                 images: ["images/ata21_1.png", "images/ata21_2.png", "images/ata21_3.png"],
                 issues: [
-                    { name: "PRESSURISATION DEGRADED / CPCU", notes: "Ref: TSM 21-30-00. Cycle CB's (Self-Test 85 sec).", ceo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22", neo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22" },
-                    { name: "VENT AV SYS FAULT / AVEC", notes: "Ref: TSM 21-26-00. Cycle CBs (Self-Test 85 sec).", ceo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17", neo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17" },
-                    { name: "AIR PACK REG FAULT", notes: "Ref: TSM 21-51-00. CAUTION: Engines will accelerate to FLT idle if running when resetting.", ceo: "Pack Temp Cont Sys 1: 122VU - X21,22 & W21,22\nSys 2: 122VU - Y18,19 & Y20,21", neo: "Sys 1: 122VU - X21, X22, Y18, 49VU - D08\nSys 2: 122VU - W21, W22, Y20, Y21" },
-                    { name: "COND HOT AIR FAULT / TRIM AIR", notes: "Ref: TSM 21-63-00. Resetting zone controllers with engines running generates ENG FADEC warning.", ceo: "Zone Temp CTL 1: 122VU - V17,19\nZone Temp CTL 2: 122VU - V18,20", neo: "SYS 1: X21, X22, D08, Y18\nSYS 2: W21, W22, Y20, Y21" }
+                    { name: "CPCU / PRESSURISATION DEGRADED", notes: "Cycle C/Bs (Self-Test 85 sec). If pressurisation degraded is suspected select mode selector to Man for <10 sec, then to Auto. Ensure ADIRUs aligned.", ceo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22", neo: "CPCU 1: 49VU - D09\nCPCU 2: 122VU - Y22" },
+                    { name: "AVEC / VENT AV SYS FAULT", notes: "Cycle C/Bs (Self-Test 85 sec). VENT EXTRACT FAULT can sometimes be caused by CB AE02 on 123VU being knocked by pilot's luggage.", ceo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17", neo: "AIR COND/AVNCS VENT/CTL: 49VU - D05,06\nMONG: 122VU - Y17" },
+                    { name: "CARGO VENTILATION STATUS", notes: "Cycle C/Bs (Self-Test 30 sec).", ceo: "Fwd Cargo Vent CTL: 122VU - T20, T22\nAft Cargo Vent Fan: 122VU - S20, S22", neo: "Fwd Cargo Vent CTL: 122VU - T20, T22\nAft Cargo Vent Fan: 122VU - S20, S22" },
+                    { name: "AIR PACK REG FAULT", notes: "CAUTION: Engines will accelerate to FLT idle if running and resetting these C/Bs. Pack off + ENG bleed off + ENG bleed and pack back on if above does not fix defect.", ceo: "Pack Temp Cont Sys 1: 122VU - X21,22 & W21,22\nSys 2: 122VU - Y18,19 & Y20,21", neo: "Newer A/C & NEO: Sys 1: 122VU - X21, X22, Y18, 49VU - D08\nSys 2: 122VU - W21, W22, Y20, Y21" },
+                    { name: "ZONE CONTROLLER / HOT AIR FAULT", notes: "If engines running, try opening X-Bleed valve. Resetting zone controllers with engines running generates ENG 1(2) FADEC warning under maintenance heading.", ceo: "Zone Temp CTL 1: 122VU - V17,19\nZone Temp CTL 2: 122VU - V18,20", neo: "HOT AIR FAULTS (UUS-UYR):\nSYS 1: X21, X22, D08, Y18\nSYS 2: W21, W22, Y20, Y21" },
+                    { name: "COND LAV / GALLEY FAN FAULT", notes: "Lav / Galley Vent Extract Fan Control & Supply.", ceo: "Control: 122VU - U19\nSupply: 122VU - U21", neo: "Control: 122VU - U19\nSupply: 122VU - U21" }
                 ]
             },
             "ATA 22": {
                 title: "Auto Flight",
                 images: ["images/ata22_1.png", "images/ata22_2.png"],
                 issues: [
-                    { name: "AUTO THRUST INOP / FMGC FAULT", notes: "Ref: TSM 22-83-00. FMGC resets can cause Auto Flt / Auto Thrust OFF ECAM MSG.", ceo: "FMGC 1: 49VU - B02\nFMGC 2: 121VU - M17\nMCDU 1: 49VU - B01\nMCDU 2: 121VU - N20", neo: "FMGC 1: 49VU - H08\nFMGC 2: 49VU - M17\nMCDU 1: 49VU - H07\nMCDU 2: 121VU - N20" },
-                    { name: "MCDU DISPLAY FAULT", notes: "Ref: TSM 22-22-00. Cycle C/Bs 5-10 sec.", ceo: "MCDU 1: 49VU - B01\nMCDU 2: 121VU - N20", neo: "MCDU 1: 49VU - H07\nMCDU 2: 49VU - N20" }
+                    { name: "NO NAV AIDS AVAILABLE", notes: "Check RMP's are not in manual or cycle the Auto/Man switch.", ceo: "Check RMP switches", neo: "Check RMP switches" },
+                    { name: "FMGC / AUTO THRUST INOP", notes: "Note: FMGC resets can cause Auto Flt / Auto Thrust OFF ECAM MSG (clears when take-off PWR selected). Check NAV BACK UP MODE KEY is in normal position.", ceo: "FMGC 1: 49VU - B02 | FMGC 2: 121VU - M17\nMCDU 1: 49VU - B01 | MCDU 2: 121VU - N20", neo: "FSN 501-550: FMGC 1: 49VU - H08, FMGC 2: 49VU - M17\nMCDU 1: 49VU - H07, MCDU 2: 121VU - N20" },
+                    { name: "MCDU DISPLAY FAULT", notes: "Cycle C/Bs (5-10 sec). If reset fails, try reset of FMGC.", ceo: "MCDU 1: 49VU - B01\nMCDU 2: 121VU - N20", neo: "MCDU 1: 49VU - H07\nMCDU 2: 121VU - N20" },
+                    { name: "FCU FAULT / FLIGHT CONTROL UNIT", notes: "Cycle C/Bs (5-10 sec). If reset fails, cycle C/Bs for 7 mins.", ceo: "FCU 1: 49VU - B05\nFCU 2: 121VU - M21", neo: "FCU 1: 49VU - H11\nFCU 2: 121VU - M21" },
+                    { name: "YAW DAMPER FAULT", notes: "Due hyds needing to be off, can only reset when stationary.", ceo: "FAC Switches OFF/ON. FAC 1: 49VU B03,B04 | FAC 2: 121VU M18,M19", neo: "FSN 501-550: FAC 1: 49VU - H19, H20" }
                 ]
             },
             "ATA 23": {
                 title: "Communications",
                 images: ["images/ata23_1.png"],
                 issues: [
-                    { name: "HF SYSTEM FAULT", notes: "Ref: TSM 23-12-00. Cycle C/Bs 5-10 sec.", ceo: "HF 1: 49VU - HA14 or L10\nHF 2: 122VU - L13", neo: "Not installed on TNK and EOW onwards.\nHF 1: 49VU - HA14" },
-                    { name: "CONTINUOUS CREW CALL / CIDS FAULT", notes: "Ref: TSM 23-34-00. EVAC Alarm sounding / CIDS reset. Resetting in flight not recommended.", ceo: "CIDS DIR 1 & 2 ESS: 49VU - G02\nCIDS DIR 1 & 2 Norm: 121VU - M05, M07", neo: "Extra C/Bs for NEO on top of CEO: HA9, HA10, HA11 and HA12" }
+                    { name: "HF SYSTEM FAULT", notes: "Cycle C/Bs (5-10 sec), Self-test 10 sec.", ceo: "HF 1: 49VU - HA14 or L10\nHF 2: 122VU - L13", neo: "Not installed on TNK and EOW onwards.\nHF 1: 49VU - HA14" },
+                    { name: "VHF SYSTEM FAULT", notes: "Cycle C/Bs (5-10 sec), Self-test 12 sec. Also check ACP resets.", ceo: "VHF 1 LH: 49VU - G09\nVHF 2 RH: 121VU - L04\nVHF 3 CTR: 121VU - L05", neo: "Standard configuration" },
+                    { name: "ACP / AUDIO CONTROL PANEL", notes: "Cycle C/Bs (5-10 sec), Self-test 1 sec.", ceo: "Capt: 49VU - G10\nF/O: 49VU - G07\n3rd OCC: 121VU - M02", neo: "Capt: 49VU - G06\nF/O: 49VU - G07\n3rd OCC: 121VU - M02" },
+                    { name: "RMP / RADIO MANAGEMENT PANEL", notes: "Cycle C/Bs (5-10 sec). For Box 1 & 2 sync issues reset AMU.", ceo: "RMP 1: 49VU - G10\nRMP 2: 121VU - L02\nRMP 3: 121VU - L03", neo: "Only two installed, Nil dispatch.\nRMP 1: 49VU - G07 & 121VU - M03\nRMP 2: 49VU - G08 & 121VU - M04\nAMU: 49VU - G06 & 121VU - M01" },
+                    { name: "CIDS / CABIN INTERCOM DATA SYSTEM", notes: "Continuous crew call / EVAC alarm sounding. Resetting in flight not recommended.", ceo: "CIDS DIR 1 (A319): 49VU - G01\nDIR 1 & 2 ESS: 49VU - G02\nDIR 1 & 2 Norm: 121VU - M05, M07", neo: "Extra NEO C/Bs on top of CEO: HA9, HA10, HA11, HA12" },
+                    { name: "CVR / COCKPIT VOICE RECORDER", notes: "Loss of test tone / test fail. See ATA 31 for DFDR.", ceo: "CVR ctrl: 49VU - E13\nCVR sply: 49VU - E14", neo: "CVR ctrl: 49VU - E13\nCVR sply: 49VU - E14" },
+                    { name: "ACARS PRINTER FAULT", notes: "Check printer roll correct orientation.", ceo: "Ptr/sply: 121VU - J21", neo: "A320 NEO: 121VU - J21\nA321 NEO: 121VU - J44" }
                 ]
             },
             "ATA 24": {
                 title: "Electrical Power",
                 images: ["images/ata24_1.png", "images/ata24_2.png", "images/ata24_3.png"],
                 issues: [
-                    { name: "BCL FAULT / BATTERY CHARGER", notes: "Ref: TSM 24-38-00. Cycle relevant battery push switch on overhead panel.", ceo: "Cycle overhead push switch (120 sec)", neo: "Cycle overhead push switch (120 sec)" },
-                    { name: "DMC FAULT MSG", notes: "Ref: TSM 24-50-00. Cycle Bus Tie Switch. Wait up to 2 mins.", ceo: "DMC 1 SPLY: E11\nDMC 2 STBY SPLY: E10", neo: "DMC 1: E8 & E10\nDMC 2: K8 & R8\nDMC 3: E7 & K9" }
+                    { name: "BCL / BATTERY CHARGER LIMITER", notes: "Cycle relevant battery push switch on overhead panel.", ceo: "Cycle overhead push switch (120 sec)", neo: "Cycle overhead push switch (120 sec)" },
+                    { name: "GCU / GENERATOR CONTROL UNIT", notes: "Cycle relevant generator push switch on overhead panel.", ceo: "Cycle overhead push switch (5-10 sec)", neo: "Cycle overhead push switch (5-10 sec)" },
+                    { name: "GPCU / GENERATOR POWER CONTROL", notes: "Engines OFF, APU OFF, External PWR OFF and Disconnect. Reinstate power and re-check.", ceo: "Full power cycle procedure", neo: "Full power cycle procedure" },
+                    { name: "TRU FAULT / TRANSFORMER RECTIFIER", notes: "Reset via CFDS: System Report, ELEC, TR*, Reset (Inhibited following ENG start).", ceo: "Reset via CFDS system report", neo: "Reset via CFDS system report" },
+                    { name: "DMC FAULT MSG", notes: "Cycle C/Bs (5-10 sec), cycle Bus Tie Switch and wait up to 2 mins.", ceo: "DMC 1 SPLY: E11\nDMC 2 STBY SPLY: E10", neo: "A321 NEO: DMC 1: E8 & E10\nDMC 2: K8 & R8\nDMC 3: E7 & K9" }
+                ]
+            },
+            "ATA 25": {
+                title: "Equipment / Furnishings",
+                images: [],
+                issues: [
+                    { name: "CABIN CREW SEAT HARNESS", notes: "Condition limits as per AMM 25-22-00-210-001-A.", ceo: "AMM 25-22-00-210-001-A", neo: "AMM 25-22-00-210-001-A" },
+                    { name: "CLASSIC & NEO SEATS", notes: "Classic B/E Aerospace Pinnacle / NEO Recaro CMM.", ceo: "B/E Aerospace Pinnacle DWR/ATP: 10175366", neo: "CMM 10239107 RECARO" },
+                    { name: "FLIGHT DECK DOOR ACCESS", notes: "Flight deck door emergency access code.", ceo: "Access code: #222", neo: "Access code: #222" }
                 ]
             },
             "ATA 26": {
                 title: "Fire Protection",
                 images: ["images/ata26_1.png"],
                 issues: [
-                    { name: "SDCU FAULT / SMOKE DETECT", notes: "Ref: TSM 26-12-00. Cycle CBs (20 mins). Clean lav smoke detector filters while pulled.", ceo: "SDCU Ch 1: 49VU - C06\nSDCU Ch 2: 122VU - T18", neo: "C05, C06, T17, T18" },
-                    { name: "FDU FAULT / FIRE DETECTOR UNIT", notes: "Ref: TSM 26-11-00. Cycle C/Bs (5-10 sec, self-test 60 sec).", ceo: "Eng 1 loop A: 49VU - A06\nEng 1 loop B: 121VU - Q38", neo: "Standard configuration" }
+                    { name: "SDCU / SMOKE DETECTOR CONTROL", notes: "Cycle C/Bs (20 mins). Pull C/Bs for 1 min first if short of time. Clean lav smoke detector filters while pulled.", ceo: "SDCU Ch 1: 49VU - C06\nSDCU Ch 2: 122VU - T18", neo: "NEWER A/C & UUS-UYY: C05, C06, T17, T18" },
+                    { name: "FDU / FIRE DETECTOR UNIT", notes: "Cycle C/Bs (5-10 sec), Self-test 60 sec.", ceo: "Eng 1 loop A: 49VU - A06 | Loop B: 121VU - Q38\nEng 2 loop A: 121VU - Q39 | Loop B: 49VU - A07", neo: "APU loop A: 121VU - L43 | Loop B: 121VU - L44" },
+                    { name: "FIRE BOTTLE SQUIBS", notes: "Cycle C/Bs (5-10 sec).", ceo: "Btl 1 squib A: 121VU - Q43 | Btl 1 squib B: 121VU - Q44\nBtl 2 squib A: 121VU - Q41 | Btl 2 squib B: 121VU - Q42", neo: "Standard configuration" }
                 ]
             },
             "ATA 27": {
                 title: "Flight Controls",
                 images: ["images/ata27_1.png", "images/ata27_2.png", "images/ata27_3.png"],
                 issues: [
-                    { name: "ELAC 1 (2) FAULT", notes: "Ref: TSM 27-93-00. Cycle push button on overhead panel for 10 sec, then C/B 30 sec.", ceo: "ELAC 1: 49VU - B11\nELAC 2: 121VU - R20", neo: "ELAC 1: 49VU - B06" },
-                    { name: "SLAT / FLAP SYS FAULT", notes: "Ref: TSM 27-50-00. Cycle relevant C/Bs with engines running.", ceo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07", neo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07" }
+                    { name: "ELAC FAULT", notes: "Cycle push button switch on overhead panel for 10 sec, then C/B 30 sec.", ceo: "ELAC 1: 49VU - B11\nELAC 2: 121VU - R20", neo: "A321 NEO: ELAC 1 - B06" },
+                    { name: "SEC FAULT", notes: "Cycle push button switches on overhead panel for 10 sec, then C/B 30 sec.", ceo: "SEC 1: 49VU - B08\nSEC 2: 121VU - Q18\nSEC 3: 121VU - Q19", neo: "A321 NEO: SEC 1 - B03" },
+                    { name: "FCDC / AILERON INDICATION OUTSIDE BOX", notes: "All HYD's selected OFF. Retract flaps to '0', select ELAC's off then back on, finally flaps back out.", ceo: "FCDC sply 1: 49VU - B10\nFCDC sply 2: 121VU - Q20", neo: "FCDC sply 1: 49VU - B10\nFCDC sply 2: 121VU - Q20" },
+                    { name: "SLAT / FLAP FAULT", notes: "Cycle relevant C/Bs 10 sec with engines running.", ceo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07", neo: "Slats fault: 121VU - R21 & 49VU - B06\nFlaps fault: 121VU - Q21 & 49VU - B07" }
                 ]
             },
             "ATA 28": {
                 title: "Fuel",
                 images: ["images/ata28_1.png", "images/ata28_2.png", "images/ata28_3.png", "images/ata28_4.png", "images/ata28_5.png"],
                 issues: [
-                    { name: "FQIC FAULT / FUEL QTY COMPUTER", notes: "Ref: TSM 28-42-00. Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27", neo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27" },
-                    { name: "CENTRE TANK LOW PRESSURE CAUTION", notes: "Ref: TSM 28-22-00. If center tank < 200kg: set FUEL MODE SEL pb to MAN, CTR TK PUMP 1 & 2 to OFF.", ceo: "Standard procedure applies", neo: "NEO CENTRE TANK PUMP FAULT: R25, R26, R27\nNEO LH TANK PUMP FAULT: R23, R24\nNEO RH TANK PUMP FAULT: R28, R29" }
+                    { name: "FQIC / FUEL QTY COMPUTER", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27", neo: "FQI Channel 1: 49VU - A13\nFQI Channel 2: 121VU - M27" },
+                    { name: "CENTRE TANK LOW PRESSURE CAUTION", notes: "If center tank < 200kg (440 lb): FUEL MODE SEL pb = MAN, CTR TK PUMP 1 & 2 = OFF.", ceo: "Applies to A318, A319, A320CEO (excl MSN 6290)", neo: "NEO CENTRE TANK PUMP FAULT: R25, R26, R27\nNEO LH PUMP: R23, R24 | NEO RH PUMP: R28, R29" },
+                    { name: "INTERCELL TRANSFER VALVE", notes: "Intercell transfer valve C/Bs.", ceo: "L/H: 49VU - A10 & 121VU - M22\nR/H: 49VU - A11 & 121VU - M23", neo: "L/H: 49VU - A10 & 121VU - M22\nR/H: 49VU - A11 & 121VU - M23" }
                 ]
             },
             "ATA 29": {
                 title: "Hydraulic Power",
                 images: ["images/ata29_1.png", "images/ata29_2.png"],
                 issues: [
-                    { name: "HYD Y(G/B) SYS LO PR", notes: "Ref: TSM 29-10-00. Cycle pump and PTU push buttons. If nil fix, check leak measurement valve positions.", ceo: "Check B HYD SYS LO PX C/B 9AB", neo: "Check B HYD SYS LO PX C/B 9AB" },
-                    { name: "YELLOW PUMP INOP / CARGO DOOR", notes: "Ref: TSM 29-15-00. Check if cargo doors are closed. Check C/Bs behind jump seat.", ceo: "Jump seat C/Bs: AB03, AB06, N30", neo: "Jump seat C/Bs: AB03, AB06, N30" }
+                    { name: "HYD Y(G/B) SYS LO PR", notes: "Cycle pump and PTU push buttons. If nil fix check leak measurement valve positions.", ceo: "Check B HYD SYS LO PX C/B 9AB", neo: "Check B HYD SYS LO PX C/B 9AB" },
+                    { name: "YELLOW PUMP INOP / CARGO DOOR", notes: "Check if cargo doors are closed. Check C/Bs behind jump seat.", ceo: "Jump seat C/Bs: AB03, AB06, N30", neo: "Jump seat C/Bs: AB03, AB06, N30" }
                 ]
             },
             "ATA 30": {
                 title: "Ice & Rain Protection",
                 images: ["images/ata30_1.png", "images/ata30_2.png"],
                 issues: [
-                    { name: "WHC FAULT / WINDOW HEAT COMPUTER", notes: "Ref: TSM 30-41-00. Cycle C/Bs 5-10 sec (Self-test 5 sec).", ceo: "WHC 1 (Left): 122VU - X13\nWHC 2 (Right): 122VU - W13", neo: "LH W/SHIELD: 123VU - AF03\nRH W/SHIELD: 123VU - AF10" }
+                    { name: "WHC / WINDOW HEAT COMPUTER", notes: "Cycle C/Bs 5-10 sec (Self-test 5 sec).", ceo: "WHC 1 (Left): 122VU - X13\nWHC 2 (Right): 122VU - W13", neo: "LH W/SHIELD: 123VU - AF03\nRH W/SHIELD: 123VU - AF10" },
+                    { name: "PHC / PROBE HEAT COMPUTER", notes: "If all 3 PHC's fail, suspect LGCIU. Individual probe C/Bs available.", ceo: "PHC 1: 49VU - D03 | PHC 2: 122VU - Y12 | PHC 3: 122VU - Y16", neo: "Individual probe/static/AOA C/Bs in 49VU/122VU" }
                 ]
             },
             "ATA 31": {
                 title: "Indicating / Recording",
                 images: ["images/ata31_1.png", "images/ata31_2.png", "images/ata31_3.png"],
                 issues: [
-                    { name: "FWC 1 (2) SPLY FAULT", notes: "Ref: TSM 31-53-00. Cycle C/Bs 5-10 sec. Only cycle one at a time!", ceo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07", neo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07" },
-                    { name: "RECORDER SYS FAULT / DFDR", notes: "Ref: TSM 31-31-00. Digital Flight Data Recorder ECAM message.", ceo: "RCDR FDIU & QAR: 121VU - K15\nRCDR/ACCLRM: 121VU - K18", neo: "DAR A321 NEO: K38, J38\nRCDR2 CVR & FDR: 121VU - K39" }
+                    { name: "FWC SPLY FAULT", notes: "Cycle C/Bs 5-10 sec (Self-test 50 sec). Only cycle one at a time!", ceo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07", neo: "FWC 1 SPLY: 49VU - F01\nFWC 2 SPLY: 121VU - Q07" },
+                    { name: "CFDIU / CENTRAL FAULT DATA", notes: "Cycle C/Bs 5-10 sec (Self-test 60 sec).", ceo: "CFDS CFDIU Sply: 121VU - J18 | Back-up: J17", neo: "Sply: 121VU - J41 | Back-up: 121VU - J40" },
+                    { name: "RECORDER SYS FAULT / DFDR", notes: "Digital Flight Data Recorder ECAM message.", ceo: "RCDR FDIU & QAR: 121VU - K15\nRCDR/ACCLRM: 121VU - K18", neo: "DAR A321 NEO: K38, J38\nRCDR2 CVR & FDR: 121VU - K39" }
                 ]
             },
             "ATA 32": {
                 title: "Landing Gear",
                 images: ["images/ata32_1.png", "images/ata32_2.png"],
                 issues: [
-                    { name: "NW STEERING FAULT / BSCU FAULT", notes: "Ref: TSM 32-42-00. Anti-skid & NWS switch to OFF, cycle C/Bs, then switch back ON.", ceo: "BSCU Sys 1: 121VU - M33, M34\nBSCU Sys 2: 121VU - M35, M36", neo: "NEO Tacho fault - MEL 32-42-06C applies" },
-                    { name: "LGCIU FAULT / GEAR INTERFACE", notes: "Ref: TSM 32-31-00. Cycle C/Bs 30 sec one at a time.", ceo: "LGCIU SYS 1: 49VU - C09\nLGCIU SYS 2: 121VU - Q35", neo: "LGCIU 1: C09, Q34, R32\nLGCIU 2: Q35, R33" }
+                    { name: "NW STEERING FAULT / BSCU", notes: "Anti-skid & NWS switch cycle OFF and ON. Cycle C/Bs.", ceo: "BSCU Sys 1: 121VU - M33, M34\nBSCU Sys 2: 121VU - M35, M36", neo: "NEO Tacho fault - MEL 32-42-06C applies" },
+                    { name: "LGCIU / LANDING GEAR INTERFACE", notes: "Cycle C/Bs 30 sec one at a time.", ceo: "LGCIU SYS 1: 49VU - C09\nLGCIU SYS 2: 121VU - Q35", neo: "LGCIU 1: C09, Q34, R32\nLGCIU 2: Q35, R33" }
+                ]
+            },
+            "ATA 33": {
+                title: "Lights",
+                images: [],
+                issues: [
+                    { name: "CABIN & FLIGHT DECK LIGHTING", notes: "Standard troubleshooting & bulb/power checks per AMM.", ceo: "Standard ATA 33 procedures", neo: "Standard ATA 33 procedures" }
                 ]
             },
             "ATA 34": {
                 title: "Navigation",
                 images: ["images/ata34_1.png", "images/ata34_2.png", "images/ata34_3.png"],
                 issues: [
-                    { name: "ADIRU FAULT / ALIGNMENT", notes: "Ref: TSM 34-12-00. If resetting 1 box, captain must manually enter aircraft position.", ceo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10", neo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10" }
+                    { name: "ADIRU FAULT / ALIGNMENT", notes: "If resetting 1 box, captain must manually enter aircraft position. ADR 1 must be operative.", ceo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10\nADIRU 3: 121VU - N3, N5, N7, N9, F9", neo: "ADIRU 1: 49VU - F06, F07\nADIRU 2: 121VU - N4, N6, N10\nADIRU 3: 121VU - N3, N5, N7, N9, F9" },
+                    { name: "NAVIGATION MSG'S / NAV AIDS", notes: "Cycle C/Bs 2 min (Self test 1-30 sec). Check standby nav switch.", ceo: "ADF 1: 49VU - H14 | ADF 2: 121VU - K02\nVOR 1: 49VU - G13 | VOR 2: 121VU - K08", neo: "Standard navigation C/B configuration" }
                 ]
             },
             "ATA 35": {
                 title: "Oxygen",
                 images: ["images/ata35_1.png", "images/ata35_2.png", "images/ata35_3.png"],
                 issues: [
-                    { name: "SMOKE HOOD TAMPER SEAL", notes: "Ref: AMM 35-30-00-210-006-A. Box seal not important - Only vacuum pack seal.", ceo: "AMM 35-30-00-210-006-A", neo: "AMM 35-30-00-210-006-A" }
+                    { name: "SMOKE HOOD TAMPER SEAL", notes: "Box seal not important - Only vacuum pack seal. AMM 35-30-00-210-006-A refers.", ceo: "AMM 35-30-00-210-006-A", neo: "AMM 35-30-00-210-006-A" }
                 ]
             },
             "ATA 36": {
                 title: "Pneumatics",
                 images: ["images/ata36_1.png", "images/ata36_2.png", "images/ata36_3.png", "images/ata36_4.png"],
                 issues: [
-                    { name: "BLEED AIR SYSTEM FAULT / BMC", notes: "Ref: TSM 36-11-00. For most air bleed faults, reset both BMCs (C/Bs 10 sec).", ceo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23", neo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23" }
+                    { name: "BLEED AIR SYSTEM FAULT / BMC", notes: "For most air bleed faults, reset both BMCs (C/Bs 10 sec). Bleed pressure below 57 psi.", ceo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23", neo: "Air bleed ENG 1 mon+ctl: 49VU - D11, D12\nAir bleed ENG 2 mon+ctl: 122VU - Z22, Z23" }
                 ]
             },
             "ATA 38": {
                 title: "Water / Waste",
                 images: ["images/ata38_1.png", "images/ata38_2.png"],
                 issues: [
-                    { name: "VACUUM TOILET SYSTEM INOP", notes: "Ref: TSM 38-31-00. Cycle C/Bs 30 sec (2001VU located in AFT Cabin Roof).", ceo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04", neo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04" }
+                    { name: "VACUUM TOILET SYSTEM INOP", notes: "Cycle C/Bs 30 sec (2001VU located in AFT Cabin Roof).", ceo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04", neo: "Vac Gen: A08 | Vac Sys: A06\nLav Pwr: A02, A01, A03, A04" }
+                ]
+            },
+            "ATA 44": {
+                title: "Cabin Systems",
+                images: [],
+                issues: [
+                    { name: "CABIN ENTERTAINMENT & SYSTEMS", notes: "Standard cabin system maintenance checks.", ceo: "Standard ATA 44 procedures", neo: "Standard ATA 44 procedures" }
                 ]
             },
             "ATA 46": {
                 title: "Information Systems",
                 images: [],
                 issues: [
-                    { name: "ATSU / ACARS DATA LINK FAULT", notes: "Ref: TSM 46-21-00. Give it 3/4 mins before coming back to life after reset.", ceo: "ATSU C/Bs: L3, L5, L15, L16, L17, L18", neo: "320 NEO: L15, L16, L17, L18\n321 NEO: K42, K43, L05" }
+                    { name: "ATSU / ACARS DATA LINK FAULT", notes: "Give it 3/4 mins before coming back to life after reset.", ceo: "ATSU C/Bs: L3, L5, L15, L16, L17, L18", neo: "320 NEO: L15, L16, L17, L18\n321 NEO: K42, K43, L05" }
                 ]
             },
             "ATA 47": {
@@ -612,42 +660,115 @@
                 title: "APU",
                 images: ["images/ata49_1.png"],
                 issues: [
-                    { name: "ECB FAULT / APU CONTROL BOX", notes: "Ref: TSM 49-61-00. APU OFF, APU Master switch set to ON. Cycle C/Bs 10 sec.", ceo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42", neo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42" }
+                    { name: "ECB / APU CONTROL BOX", notes: "APU OFF, APU Master switch set to ON. Cycle C/Bs 10 sec.", ceo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42", neo: "ECB Sply: 121VU - L41\nAPU Ctl: 121VU - L42" }
                 ]
             },
             "ATA 52": {
                 title: "Doors",
                 images: ["images/ata52_1.png", "images/ata52_2.png", "images/ata52_3.png"],
                 issues: [
-                    { name: "CKPT DOOR STRIKER FAULT", notes: "Ref: TSM 52-73-00. Try holding switch to OPEN for 30s to clear striker fault or Pax Mong C/B.", ceo: "Pax Mong CB: 122VU - T13 (Repeat 3 times)\nAccess Code: #222", neo: "Pax Mong CB: 122VU - T13\nAccess Code: #222" }
+                    { name: "CKPT DOOR STRIKER FAULT", notes: "Try holding switch to OPEN for 30s to clear striker fault or Pax Mong C/B.", ceo: "Pax Mong CB: 122VU - T13 (Repeat 3 times)\nAccess Code: #222", neo: "Pax Mong CB: 122VU - T13\nAccess Code: #222" },
+                    { name: "OVERWING LOCK STATUS MSG", notes: "A321 Neo Only. Ensure ADIRUs aligned. Activated by engine speed (50% N1).", ceo: "N/A", neo: "A321 Neo Overwing Emergency Exit Lock logic" }
+                ]
+            },
+            "ATA 53": {
+                title: "Fuselage",
+                images: [],
+                issues: [
+                    { name: "FUSE FAIRING PANEL SCREWS", notes: "AMM 53-35-00-200-002. Cat Q 10 cycles.", ceo: "AMM 53-35-00-200-002", neo: "AMM 53-35-00-200-002" },
+                    { name: "RADOME INSPECTION", notes: "AMM 53-15-11-200-001A.", ceo: "AMM 53-15-11-200-001A", neo: "AMM 53-15-11-200-001A" }
+                ]
+            },
+            "ATA 54": {
+                title: "Nacelles / Pylons",
+                images: [],
+                issues: [
+                    { name: "INLET COWL LIP FASTENERS", notes: "SRM 54-10-00 pg 109.", ceo: "SRM 54-10-00 pg 109", neo: "SRM 54-10-00 pg 109" },
+                    { name: "PRESSURE RELIEF DOOR", notes: "AMM 54-53-11-200-001A Rivet P/N MS20470A3-7.", ceo: "AMM 54-53-11-200-001A", neo: "AMM 54-53-11-200-001A" }
+                ]
+            },
+            "ATA 56": {
+                title: "Windows",
+                images: [],
+                issues: [
+                    { name: "WINDOW DELAMINATION SLIDING", notes: "AMM 56-12-11-991-00500-A (3\" all around).", ceo: "AMM 56-12-11-991-00500-A", neo: "AMM 56-12-11-991-00500-A" }
+                ]
+            },
+            "ATA 57": {
+                title: "Wings",
+                images: [],
+                issues: [
+                    { name: "WING STRUCTURE & PANELS", notes: "SRM & AMM standard inspection procedures.", ceo: "Standard wing maintenance", neo: "Standard wing maintenance" }
                 ]
             },
             "ATA 71": {
                 title: "Power Plant",
                 images: ["images/ata71_1.png"],
                 issues: [
-                    { name: "ENGINE OPERATING LIMITS", notes: "Ref: AMM 71-00-00-860-010. Includes EGT, N1, N2, oil PX + temp, oil consumption and VIB limits.", ceo: "AMM 71-00-00-860-011-C TABLE OF IDLE INDICATIONS", neo: "AMM 71-00-00-860-011-C TABLE OF IDLE INDICATIONS" }
+                    { name: "ENGINE OPERATING LIMITS", notes: "AMM 71-00-00-860-010. Includes EGT, N1, N2, oil PX + temp, oil consumption and VIB limits.", ceo: "AMM 71-00-00-860-011-C TABLE OF IDLE INDICATIONS", neo: "AMM 71-00-00-860-011-C TABLE OF IDLE INDICATIONS" }
+                ]
+            },
+            "ATA 72": {
+                title: "Engine - General",
+                images: [],
+                issues: [
+                    { name: "ATTRITION LINER DAMAGE", notes: "Inspect IAW AMM 72-32-85-200-010-B. P/N fast curing acoustic linear filler - EC3534BA (2-part 50/50 mix).", ceo: "AMM 72-32-85-200-010-B", neo: "AMM 72-32-85-200-010-B" }
                 ]
             },
             "ATA 73": {
                 title: "Engine Fuel and Control",
                 images: ["images/ata73_1.png"],
                 issues: [
-                    { name: "FADEC A (B) FAULT / ENG DUAL FAIL", notes: "Ref: TSM 73-21-00. Engines OFF > 5 min. (EPR is Normal Mode, N1 is Default/Degraded mode MEL 73-20-04A).", ceo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R41", neo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R40" }
+                    { name: "FADEC A (B) FAULT / ENG DUAL FAIL", notes: "Engines OFF > 5 min. (EPR is Normal Mode, N1 is Default/Degraded mode MEL 73-20-04A).", ceo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R41", neo: "Eng 1 FADEC A & EIU1: 49VU - A04\nEng 1 FADEC B & EIU1: 121VU - R40" }
+                ]
+            },
+            "ATA 74": {
+                title: "Ignition",
+                images: [],
+                issues: [
+                    { name: "IGNITION SYSTEM FAULTS", notes: "Check FADEC & ignition exciter units.", ceo: "Standard ignition checks", neo: "Standard ignition checks" }
+                ]
+            },
+            "ATA 75": {
+                title: "Air",
+                images: [],
+                issues: [
+                    { name: "ENGINE AIR SYSTEM", notes: "Engine bleed and air control valve checks.", ceo: "Standard engine air procedures", neo: "Standard engine air procedures" }
                 ]
             },
             "ATA 76": {
                 title: "Engine Controls",
                 images: [],
                 issues: [
-                    { name: "AUTO THRUST FAULT", notes: "Ref: TSM 76-11-00. Cycle C/Bs 90 sec (Self test 120 sec).", ceo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17", neo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17" }
+                    { name: "AUTO THRUST FAULT", notes: "Cycle C/Bs 90 sec (Self test 120 sec).", ceo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17", neo: "FADEC grd pwr sw cycle\nFMGC 1: 49VU - B02\nFMGC 2: 121VU - M17" }
+                ]
+            },
+            "ATA 77": {
+                title: "Engine Indicating",
+                images: [],
+                issues: [
+                    { name: "EVMU FAULT", notes: "Cycle C/Bs 10 sec (Self test 30 sec).", ceo: "Eng 1 & 2 EVMU: 121VU - R44", neo: "Eng 1 & 2 EVMU: 121VU - R44" }
+                ]
+            },
+            "ATA 78": {
+                title: "Exhaust",
+                images: [],
+                issues: [
+                    { name: "THRUST REVERSER FAULT", notes: "Cycle C/Bs 2 sec (Self test 3 sec).", ceo: "Oil Px #1: 121VU - N40\nOil Px #2: 121VU - N41", neo: "Oil Px #1: 121VU - N40\nOil Px #2: 121VU - N41" }
+                ]
+            },
+            "ATA 79": {
+                title: "Engine Oil",
+                images: [],
+                issues: [
+                    { name: "IAE OIL CONSUMPTION LIMITS", notes: "TSM 79-00-00-810-838. Max limit: 0.45 qt/hr (0.42 l/hr).", ceo: "AMM Subtask 72-00-00-290-137-A", neo: "AMM Subtask 72-00-00-290-137-A" }
                 ]
             },
             "ATA 80": {
                 title: "Starting",
                 images: [],
                 issues: [
-                    { name: "LEAP 1A IGN FAULTS / START FAULT", notes: "Ref: TSM 80-11-00 & TFU 74.00.00.096. Min air pressure to start CEO is 25 PSI. NEO is 30 PSI.", ceo: "Min air pressure: 25 PSI", neo: "Min air pressure: 30 PSI\nThird attempt succeeds automatically (TFU 74.00.00.096)." }
+                    { name: "LEAP 1A IGN FAULTS / START FAULT", notes: "Min air pressure to start CEO is 25 PSI. NEO is 30 PSI.", ceo: "Min air pressure: 25 PSI", neo: "Min air pressure: 30 PSI\nThird attempt succeeds automatically (TFU 74.00.00.096)." }
                 ]
             }
         };
@@ -791,16 +912,15 @@
 
         function openModal(chapterCode) {
             const chapter = ataDatabase[chapterCode];
-            modalBody.innerHTML = ''; // Clear previous images
+            modalBody.innerHTML = '';
             
             if (chapter.images && chapter.images.length > 0) {
                 chapter.images.forEach(imgPath => {
                     const img = document.createElement('img');
                     img.src = imgPath;
                     img.alt = `Schematic for ${chapterCode}`;
-                    // Fallback if image not found locally yet
                     img.onerror = function() {
-                        this.outerHTML = `<div class="no-diagrams-text">Missing file: ${imgPath}<br>Please upload this image to your GitHub repository.</div>`;
+                        this.outerHTML = `<div class="no-diagrams-text">Missing file: ${imgPath}<br>Please upload this image to your repository.</div>`;
                     };
                     modalBody.appendChild(img);
                 });
